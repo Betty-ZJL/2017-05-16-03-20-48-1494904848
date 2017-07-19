@@ -1,46 +1,28 @@
 const loadAllItems = require('./loadAllItems.js');
 
-module.exports = function main() {
-    console.log("Debug Info");
-    return 'Hello World!';
-};
-
-function printInventory(input){
-    var item;
-    var item_list=[];
-    var list='***'<没钱赚商店>购物清单***';
+module.exports = function main(inputs) {
+    var allItems=loadAllItems();
+    var nums=[];
     var sum=0;
-    for(let i=0;i<input.length;i++){
-        item=input[i];
-        if (item_list.length==0){
-            item.count=1;
-            item_list.push(item);
-        }
-        else{
-            for(let j=0;j<item_list.length;j++){
-                if(input[i]=item_list[j])
-            }      
+    var list='***<没钱赚商店>购物清单***\n';
+    for(let i=0;i<allItems.length;i++)
+        nums[i]=0;
+    for(let i=0;i<inputs.length;i++){
+        for(let j=0;j<allItems.length;j++){
+            if(inputs[i]==allItems[j].barcode)
+               nums[j]++;
+        }   
+    }
+    for(let i=0;i<allItems.length;i++){
+        if(nums[i]){
+            list=list+`名称：${allItems[i].name}，数量：${nums[i]}${allItems[i].unit}，单价：${allItems[i].price.toFixed(2)}(元)，小计：${(nums[i]*allItems[i].price).toFixed(2)}(元)\n`;
+            sum=sum+nums[i]*allItems[i].price;
         }
     }
-    
-}
-
-let actualText = printInventory(inputs);
-
+    list=list+'----------------------\n'+`总计：${sum.toFixed(2)}(元)\n`+'**********************';
+    return list;
+};
 
 
-        var expectText =
 
-            '***<没钱赚商店>购物清单***\n' +
-
-            '名称：可口可乐，数量：5瓶，单价：3.00(元)，小计：15.00(元)\n' +
-
-            '名称：雪碧，数量：2瓶，单价：3.00(元)，小计：6.00(元)\n' +
-
-            '名称：电池，数量：1个，单价：2.00(元)，小计：2.00(元)\n' +
-
-            '----------------------\n' +
-
-            '总计：23.00(元)\n' +
-
-            '**********************';
+       
